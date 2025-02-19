@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Libros</title>
+</head>
+
+<body>
+  <h1>Libros</h1>
+  <ul>
+    <% libros.forEach(libro => { %>
+      <li>
+        <a href="/libro/<%= libro.isbn %>">
+            <%= libro.titulo %>
+        </a> - <%= libro.autor %>
+
+        <!-- Formulario para borrar el libro -->
+        <form action="/borrar/<%= libro.isbn %>" method="POST" style="display:inline;">
+          <button type="submit" onclick="return confirm('¿Estás seguro de que quieres borrar este libro?');">Borrar</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+  <a href="/nuevo">Añadir nuevo libro</a>
+</body>
+
+
+</html>

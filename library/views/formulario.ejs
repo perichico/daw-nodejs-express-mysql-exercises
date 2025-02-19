@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuevo Libro</title>
+</head>
+<body>
+  <h1>Agregar un nuevo libro</h1>
+  <form action="/nuevo" method="POST">
+    <label for="isbn">ISBN:</label>
+    <input type="text" id="isbn" name="isbn" required><br><br>
+
+    <label for="titulo">Título:</label>
+    <input type="text" id="titulo" name="titulo" required><br><br>
+
+    <label for="autor">Autor:</label>
+    <input type="text" id="autor" name="autor" required><br><br>
+
+    <button type="submit">Agregar</button>
+  </form><br>
+  <a href="/libros">Volver a la lista</a>
+</body>
+</html>
