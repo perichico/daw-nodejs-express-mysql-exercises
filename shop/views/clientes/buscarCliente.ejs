@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Cliente</title>
+</head>
+<body>
+    <header>
+        <h1>Detalles del Cliente</h1>
+        <a href="/clientes">Volver a la lista de clientes</a>
+    </header>
+
+    <% if (cliente) { %>
+        <section>
+            <h2>Información del Cliente</h2>
+            <ul>
+                <li><strong>Nombre:</strong> <%= cliente.Nombre %></li>
+                <li><strong>Email:</strong> <%= cliente.Email %></li>
+                <li><strong>Teléfono:</strong> <%= cliente.Telefono || 'No disponible' %></li>
+            </ul>
+
+            <h2>Pedidos del Cliente</h2>
+            <% if (cliente.Pedidos.length > 0) { %>
+                <ul>
+                    <% cliente.Pedidos.forEach(pedido => { %>
+                        <li>
+                            <strong>Pedido #<%= pedido.ID %></strong><br>
+                            <strong>Fecha:</strong> <%= pedido.Fecha %><br>
+                            <strong>Monto:</strong> $<%= pedido.Monto %><br>
+                            <strong>Estado:</strong> <%= pedido.Estado %><br>
+                            <a href="/pedidos/<%= pedido.ID %>">Ver detalles del pedido</a>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No tiene pedidos.</p>
+            <% } %>
+        </section>
+    <% } else { %>
+        <p>Cliente no encontrado.</p>
+    <% } %>
+    
+</body>
+</html>

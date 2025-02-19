@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Pedido</title>
+</head>
+<body>
+    <header>
+        <h1>Detalles del Pedido</h1>
+        <a href="/pedidos">Volver a la lista de pedidos</a>
+    </header>
+
+    <% if (pedido) { %>
+        <section>
+            <h2>Información del Pedido</h2>
+            <ul>
+                <li><strong>ID del Pedido:</strong> <%= pedido.ID %></li>
+                <li><strong>Fecha:</strong> <%= pedido.Fecha %></li>
+                <li><strong>Monto:</strong> $<%= pedido.Monto %></li>
+                <li><strong>Estado:</strong> <%= pedido.Estado %></li>
+            </ul>
+
+            <h2>Cliente del Pedido</h2>
+            <% if (pedido.Cliente) { %>
+                <ul>
+                    <li><strong>Nombre:</strong> <%= pedido.Cliente.Nombre %></li>
+                    <li><strong>Email:</strong> <%= pedido.Cliente.Email %></li>
+                    <li><strong>Teléfono:</strong> <%= pedido.Cliente.Telefono || 'No disponible' %></li>
+                </ul>
+            <% } else { %>
+                <p>No se encontró el cliente para este pedido.</p>
+            <% } %>
+        </section>
+    <% } else { %>
+        <p>Pedido no encontrado.</p>
+    <% } %>
+    
+</body>
+</html>

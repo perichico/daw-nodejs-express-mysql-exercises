@@ -1,0 +1,7 @@
+<h1>Lista de Pedidos</h1>
+<ul>
+    <% pedidos.forEach(pedido => { %>
+        <li><a href="/pedidos/<%= pedido.ID %>">Pedido <%= pedido.ID %></a></li>
+    <% }) %>
+</ul>
+<a href="/pedidos/nuevo">Nuevo Pedido</a>
