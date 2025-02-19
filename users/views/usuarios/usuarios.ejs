@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+</head>
+<body>
+    <h1>Listado de Usuarios</h1>
+
+    <% if (users && users.length > 0) { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                    <tr>
+                        <td><%= user.ID %></td>
+                        <td><%= user.Nombre %></td>
+                        <td><%= user.Email %></td>
+                        <td>
+                            <a href="/usuarios/edit/<%= user.ID %>">Editar</a> |
+                            <a href="/usuarios/delete/<%= user.ID %>">Eliminar</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No hay usuarios disponibles.</p>
+    <% } %>
+
+    <a href="/usuarios/create">Agregar Usuario</a>
+
+</body>
+</html>
