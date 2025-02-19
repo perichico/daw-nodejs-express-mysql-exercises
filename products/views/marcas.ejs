@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Marcas</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Lista de Marcas</h1>
+
+    <!-- Formulario para crear una nueva marca -->
+    <h2>Crear Nueva Marca</h2>
+    <form action="/marca" method="POST">
+        <label>CIF: <input type="text" name="cif" required></label><br>
+        <label>Nombre: <input type="text" name="nombreMarca" required></label><br>
+        <label>Nacionalidad: <input type="text" name="nacionalidad" required></label><br>
+        <button type="submit">Crear Marca</button>
+    </form>
+
+    <h2>Marcas Existentes</h2>
+    <% if (marcas.length > 0) { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>CIF</th>
+                    <th>Nombre</th>
+                    <th>Nacionalidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% marcas.forEach(marca => { %>
+                    <tr id="marca-<%= marca.cif %>">
+                        <td><%= marca.cif %></td>
+                        <td><%= marca.nombreMarca %></td>
+                        <td><%= marca.nacionalidad %></td>
+                        <td>
+                            <button class="delete-button" data-cif="<%= marca.cif %>">Eliminar</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No hay marcas registradas.</p>
+    <% } %>
+
+    <script>
+        // Función para eliminar una marca con fetch
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const cif = event.target.getAttribute('data-cif');
+                
+                    try {
+                        const response = await fetch(`/marca/${cif}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            // Si la eliminación es exitosa, elimina la fila de la tabla
+                            document.getElementById(`marca-${cif}`).remove();
+                            alert(result.mensaje);
+                        } else {
+                            alert(result.error || 'Error desconocido');
+                        }
+                    } catch (error) {
+                        console.error('Error al eliminar la marca:', error);
+                        alert('Error al eliminar la marca');
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

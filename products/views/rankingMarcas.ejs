@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking de Marcas</title>
+</head>
+<body>
+    <h1>Ranking de Marcas con Más Productos</h1>
+
+    <% if (rankingMarcas.length > 0) { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Ranking</th>
+                    <th>Marca</th>
+                    <th>Número de Productos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% rankingMarcas.forEach((marca, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td> <!-- Ranking empezando desde 1 -->
+                        <td><%= marca.nombreMarca %></td>
+                        <td><%= marca.productoCount %></td> <!-- El número de productos -->
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No hay marcas disponibles</p>
+    <% } %>
+
+</body>
+</html>

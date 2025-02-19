@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+
+    <% if (productos.length > 0) { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="productos-lista">
+                <% productos.forEach(producto => { %>
+                    <tr id="producto-<%= producto.id %>">
+                        <td><%= producto.id %></td>
+                        <td><%= producto.nombreProducto %></td>
+                        <td><%= producto.precio %>€</td>
+                        <td><%= producto.categoria %></td>
+                        <td>
+                            <button class="delete-btn" data-id="<%= producto.id %>">Eliminar</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No hay productos disponibles</p>
+    <% } %>
+
+    <h2>Añadir un Producto</h2>
+    <form action="/products" method="POST">
+        <label>Nombre: <input type="text" name="nombreProducto" required></label><br>
+        <label>Precio: <input type="number" name="precio" step="0.01" required></label><br>
+        <label>Categoría: <input type="text" name="categoria" required></label><br>
+        <label>Marca CIF: <input type="text" name="marcaCIF" required></label><br>
+        <button type="submit">Agregar Producto</button>
+    </form>
+
+    <script>
+        // Captura todos los botones de eliminar
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const productId = event.target.getAttribute('data-id');
+                const row = document.getElementById('producto-' + productId);
+
+                // Realizar la petición DELETE con fetch
+                try {
+                    const response = await fetch(`/products/${productId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Eliminar la fila de la tabla si el producto se eliminó correctamente
+                        row.remove();
+                    } else {
+                        console.error('Error al eliminar el producto');
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud DELETE:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

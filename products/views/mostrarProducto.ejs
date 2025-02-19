@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto</title>
+</head>
+<body>
+    <h1>Detalle del Producto</h1>
+
+    <% if (producto) { %>
+        <p><strong>ID:</strong> <%= producto.id %></p>
+        <p><strong>Nombre:</strong> <%= producto.nombreProducto %></p>
+        <p><strong>Precio:</strong> <%= producto.precio %>€</p>
+        <p><strong>Categoría:</strong> <%= producto.categoria %></p>
+        <p><strong>Marca:</strong> <%= producto.marcaCIF %></p>
+        
+        <a href="/productos">Volver a la lista de productos</a>
+    <% } else { %>
+        <p>Producto no encontrado</p>
+    <% } %>
+</body>
+</html>
