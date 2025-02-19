@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <form action="/products" method="POST">
+        <input type="text" name="name" placeholder="Product Name" required>
+        <input type="number" name="price" placeholder="Price" step="0.01" required>
+        <input type="text" name="category" placeholder="Category" required>
+        <button type="submit">Añadir producto</button>
+    </form><br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoria</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% products.forEach(product=> { %>
+                <tr>
+                    <td>
+                        <%= product.id %>
+                    </td>
+                    <td>
+                        <%= product.name %>
+                    </td>
+                    <td>
+                        <%= product.price %>
+                    </td>
+                    <td>
+                        <%= product.category %>
+                    </td>
+                    <td>
+                        <!-- Usamos un botón con un ID único para cada producto -->
+                        <button class="deleteButton" data-product-id="<%= product.id %>">Delete</button>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table><br><br>
+
+    <form action="" method="GET" id="productForm">
+        <input type="text" name="id" placeholder="Id del producto" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <form action="" method="GET" id="marcaForm">
+        <input type="text" name="name" placeholder="Nombre de la marca" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+
+
+</body>
+
+<script>
+    // Función para eliminar un producto usando fetch
+    function deleteProduct(productId) {
+        fetch(`/products/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                _method: 'DELETE',
+            }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Producto eliminado');
+                    document.querySelector(`#product-${productId}`).remove();
+                } else {
+                    console.error('Error al eliminar el producto');
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+            });
+    }
+
+    document.querySelectorAll('.deleteButton').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const productId = event.target.getAttribute('data-product-id');
+            deleteProduct(productId);
+        });
+    });
+
+    document.getElementById('productForm').addEventListener('submit', function (e) {
+        e.preventDefault();  
+        const productId = document.querySelector('input[name="id"]').value;
+        window.location.href = `/product/${productId}`;  
+    });
+
+    document.getElementById('marcaForm').addEventListener('submit', function (e) {
+        e.preventDefault();  
+        const nameMarca = document.querySelector('input[name="name"]').value;
+        window.location.href = `/productsMarca/${nameMarca}`;  
+    });
+</script>
+
+</html>

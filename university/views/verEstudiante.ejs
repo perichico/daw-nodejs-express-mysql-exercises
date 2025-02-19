@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del alumno</title>
+</head>
+
+<body>
+    <h1>Detalles del alumno</h1>
+
+    <div>
+        <h2>
+            <%= estudiante.nombre %>
+        </h2>
+        <p><strong>Campus:</strong> $<%= estudiante.campus %>
+        </p>
+        <p><strong>Edad:</strong>
+            <%= estudiante.edad %>
+        </p>
+        <p><strong>Estado:</strong>
+            <%= estudiante.estado %>
+        </p>
+    </div>
+
+    <a href="/estudiantes">Volver a la página principal</a>
+</body>
+
+</html>
